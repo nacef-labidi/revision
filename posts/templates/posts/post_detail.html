@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ post.title }}</h2>
+
+    <!-- Affiche les categories d'un post -->
+    {{ post.categories.all|join:", " }}
+
+    <!-- On ajoute le prefixe /media/ defini dans MEDIA_URL pour pouvoir afficher les images -->
+    <p><img src="/media/{{ post.photo }}"/></p>
+
+    <p>{{ post.content }}</p>
+
+    <p>Published on {{ post.pub_date }} by {{ post.author }}</p>
+
+{% endblock %}

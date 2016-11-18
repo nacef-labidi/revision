@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+            <div class="col-md-8">
+                {% for post in posts %}
+                    <!-- Le titre du post pointe vers la view detail en lui passant l'id du post -->
+                    <h2><a href="{% url 'post_detail' pk=post.id %}">{{ post.title }}</a></h2>
+
+                    <!-- Liste toutes les categories du post -->
+                    {{ post.categories.all|join:", " }}
+
+                    <!-- On doit rajouter le prefixe /media/ defini dans la variable de settings MEDIA_URL pour afficher les images -->
+                    <p><img src="/media/{{ post.photo }}"/></p>
+
+                    <!-- Coupe le texte au bout de 100 mots -->
+                    <p>{{ post.content|truncatewords:"100" }}</p>
+
+                    <!-- De meme que pour le titre le lien Read more ponte vers la page de details du post -->
+                    <p><a href="{% url 'post_detail' pk=post.id %}">Read more</a></p>
+
+                    <p>Published on {{ post.pub_date }} by {{ post.author }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4">
+                <h3>Categories</h3>
+                <ul>
+                    <!-- On recupere la liste des categories passee dans le contexte de la view -->
+                    {% for category in categories %}
+
+                        <!-- Un lien sur chaque categorie pointe vers l'url de filtrage par categorie -->
+                        <!-- On recupere la liste des posts de chaque categorie a travers la relation inverse category.post_set.all -->
+                        <!-- On utilise le filtre length pour avoir le nombre de posts de chaque categorie -->
+                        <li><a href="{% url 'post_category' category_id=category.id %}">{{ category }} ({{ category.post_set.all|length }})</a></li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Lien vers la CreateView d'un post -->
+                <a href="{% url 'post_create' %}">New post</a>
+
+            </div>
+
+{% endblock %}

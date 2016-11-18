@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="col-md-8">
+
+        <!-- On doit rajouter enctype="multipart/form-data" pour pouvoir uploader les fichiers -->
+        <form action="" method="post" enctype="multipart/form-data">
+
+            <!-- csrf_token est une exignece de django pour proteger le form contre les attaques -->
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Save"/>
+        </form>
+    </div>
+{% endblock %}

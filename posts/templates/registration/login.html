@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+<!-- Formulaire de login -->
+{% block content %}
+    <div class="col-md-8">
+        <form action="" method="post">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Login"/>
+        </form>
+    </div>
+{% endblock %}
